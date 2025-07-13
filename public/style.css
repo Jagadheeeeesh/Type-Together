@@ -1,20 +1,28 @@
 body {
-  font-family: 'Segoe UI', Arial, sans-serif;
-  background: linear-gradient(135deg, #111 0%, #222 100%);
+  font-family: 'JetBrains Mono', 'Fira Code', 'Space Mono', 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(270deg, #1e1e4f, #27275f, #0f0f2e);
+  background-size: 400% 400%;
+  animation: gradient-x 16s ease infinite;
   color: #fff;
   margin: 0;
   padding: 0;
   min-height: 100vh;
 }
+@keyframes gradient-x {
+  0% {background-position:0% 50%}
+  50% {background-position:100% 50%}
+  100% {background-position:0% 50%}
+}
 #lobby, #game {
-  max-width: 600px;
+  max-width: 650px;
   margin: 60px auto 0 auto;
-  background: rgba(24,24,24,0.98);
+  background: rgba(255,255,255,0.05);
   padding: 36px 32px 32px 32px;
-  border-radius: 18px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.45);
-  -webkit-backdrop-filter: blur(2px);
-  backdrop-filter: blur(2px);
+  border-radius: 1.25rem;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.1), 0 8px 32px rgba(0,0,0,0.45);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.10);
 }
 #lobby input, #lobby button {
   font-size: 1.15em;
@@ -44,15 +52,32 @@ body {
   color: #fff;
   box-shadow: 0 2px 12px #fff2;
 }
-#paragraph {
-  font-size: 1.22em;
-  margin-bottom: 20px;
-  color: #e0e0e0;
-  background: #232323;
-  padding: 18px;
-  border-radius: 10px;
-  letter-spacing: 0.02em;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+#paragraph, #typed-overlay {
+  -webkit-user-select: none;
+  user-select: none;
+}
+#typed-overlay span.word-current, #typed-overlay .word-current {
+  text-decoration: underline;
+  color: #fff !important;
+  background: #3730a3 !important;
+  padding: 0 4px;
+  border-radius: 6px;
+  box-shadow: 0 0 8px #818cf8;
+  font-weight: bold;
+}
+#typed-overlay .typing-cursor {
+  display: inline-block;
+  width: 1.1ch;
+  height: 1.2em;
+  background: linear-gradient(90deg,#818cf8 0%,#a5b4fc 100%);
+  border-radius: 2px;
+  margin-left: -2px;
+  box-shadow: 0 0 8px #a5b4fc,0 0 16px #818cf8;
+  animation: cursor-blink 1s steps(2) infinite;
+}
+@keyframes cursor-blink {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 #input {
   width: 100%;
@@ -66,6 +91,7 @@ body {
   outline: none;
   box-shadow: 0 2px 8px rgba(0,0,0,0.18);
   transition: background 0.2s, box-shadow 0.2s;
+  font-family: 'Fira Code', 'JetBrains Mono', 'Space Mono', monospace;
 }
 #input:focus {
   background: #232323;
@@ -76,24 +102,71 @@ body {
 }
 .progress-bar {
   background: #232323;
-  border-radius: 8px;
-  margin-bottom: 12px;
+  border-radius: 1rem;
+  margin-bottom: 18px;
   overflow: hidden;
-  height: 28px;
+  height: 18px;
   box-shadow: 0 1px 6px rgba(0,0,0,0.18);
+  position: relative;
+}
+.progress-bar.polished-bar {
+  background: #232323;
+  border-radius: 1rem;
+  margin-bottom: 18px;
+  overflow: hidden;
+  height: 22px;
+  box-shadow: 0 1px 12px #a3e63544 inset, 0 1px 6px rgba(0,0,0,0.18);
+  position: relative;
+  transition: box-shadow 0.3s;
 }
 .progress-bar-inner {
-  background: linear-gradient(90deg, #fff 0%, #444 100%);
+  background: linear-gradient(90deg, #4ade80 0%, #a3e635 100%);
   height: 100%;
-  border-radius: 8px;
+  border-radius: 1rem;
   color: #111;
   text-align: left;
-  line-height: 28px;
+  line-height: 18px;
   font-weight: 600;
   padding-left: 14px;
-  transition: width 0.2s;
+  transition: width 0.3s cubic-bezier(.4,0,.2,1);
   letter-spacing: 0.01em;
   box-shadow: 0 1px 4px #fff2 inset;
+  position: relative;
+}
+.progress-bar-inner.polished-inner {
+  background: linear-gradient(90deg, #a3e635 0%, #4ade80 100%);
+  height: 100%;
+  border-radius: 1rem;
+  color: #111;
+  text-align: left;
+  line-height: 22px;
+  font-weight: 600;
+  padding-left: 14px;
+  transition: width 0.5s cubic-bezier(.4,0,.2,1), box-shadow 0.3s;
+  letter-spacing: 0.01em;
+  box-shadow: 0 1px 8px #fff2 inset, 0 0 16px #a3e63588;
+  position: relative;
+  animation: pulse-bar 1.2s infinite alternate;
+}
+@keyframes pulse-bar {
+  0% { box-shadow: 0 1px 8px #fff2 inset, 0 0 16px #a3e63544; }
+  100% { box-shadow: 0 1px 8px #fff2 inset, 0 0 32px #4ade8088; }
+}
+.progress-bar-inner:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 50%;
+  top: -32px;
+  transform: translateX(-50%);
+  background: rgba(30,41,59,0.95);
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.95em;
+  white-space: nowrap;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+  pointer-events: none;
+  z-index: 10;
 }
 #winner {
   font-size: 1.5em;
@@ -142,4 +215,36 @@ body {
 #startBtn:hover:enabled {
   background: linear-gradient(90deg, #ffff1c 0%, #00c3ff 100%);
   color: #111;
+}
+.user-stats {
+  font-size: 1em;
+  color: #fff;
+  margin-top: 2px;
+  margin-left: 8px;
+  text-shadow: 0 1px 4px #23232388;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Space Mono', monospace;
+}
+.finish-banner {
+  position: absolute;
+  right: 12px;
+  top: 0;
+  background: linear-gradient(90deg,#facc15 0%,#fbbf24 100%);
+  color: #232323;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 2px 14px 2px 8px;
+  font-size: 1.1em;
+  box-shadow: 0 2px 8px #facc1533;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  animation: banner-pop 0.5s cubic-bezier(.4,0,.2,1);
+}
+@keyframes banner-pop {
+  0% { transform: scale(0.7); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.finish-banner .flag {
+  font-size: 1.3em;
+  margin-right: 4px;
 }

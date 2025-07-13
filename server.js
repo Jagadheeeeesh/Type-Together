@@ -6,7 +6,23 @@ const server = http.createServer(app);
 const io = new Server(server);
 
 const PORT = process.env.PORT || 3000;
-const PARAGRAPH = "The quick brown fox jumps over the lazy dog.";
+const PARAGRAPHS = [
+  "JavaScript developers love solving problems with code every single day at their favorite desk.",
+  "The quick brown fox jumps over the lazy dog while typing fast and learning new tricks daily.",
+  "Typing games improve your speed and accuracy with every word you practice in a fun environment.",
+  "Socket.IO enables real-time communication for multiplayer games and collaborative web projects.",
+  "Modern web apps use glassmorphism and neumorphism for beautiful, soft, and engaging user interfaces.",
+  "Developers enjoy coding challenges that test their logic, creativity, and problem-solving skills daily.",
+  "A good typing game motivates players to compete, improve, and celebrate every small achievement.",
+  "Frontend and backend work together to deliver seamless multiplayer experiences for all users online.",
+  "Learning to type quickly and accurately is a valuable skill for programmers and writers everywhere.",
+  "Every developer should practice typing to boost productivity and reduce errors in their daily workflow."
+];
+
+function getRandomParagraph() {
+  // Pick a random paragraph from the list
+  return PARAGRAPHS[Math.floor(Math.random() * PARAGRAPHS.length)];
+}
 
 let rooms = {};
 let roomCounter = 1;
@@ -26,7 +42,8 @@ io.on('connection', (socket) => {
     let roomId = findAvailableRoom();
     if (!roomId) {
       roomId = `room${roomCounter++}`;
-      rooms[roomId] = { users: {}, started: false, finished: false };
+      // Assign a random paragraph to this room
+      rooms[roomId] = { users: {}, started: false, finished: false, paragraph: getRandomParagraph() };
     }
     socket.join(roomId);
     rooms[roomId].users[socket.id] = { username, progress: 0, finished: false };
@@ -44,7 +61,8 @@ io.on('connection', (socket) => {
         rooms[roomId].users[id].finished = false;
         readyPlayers[id] = false;
       }
-      io.to(roomId).emit('startGame', rooms[roomId].users, PARAGRAPH);
+      // Use the room's assigned paragraph
+      io.to(roomId).emit('startGame', rooms[roomId].users, rooms[roomId].paragraph);
     }
   });
 
