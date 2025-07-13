@@ -64,8 +64,3 @@ code-together/
 - **Sentences:** Edit the `PARAGRAPHS` array in `server.js` to add or change the typing challenges.
 - **UI/UX:** Tweak `public/style.css` for colors, fonts, and effects.
 
-## License
-
-MIT
-
----
