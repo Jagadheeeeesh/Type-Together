@@ -2,6 +2,8 @@
 
 A modern, real-time multiplayer typing game for developers, built with Node.js, Express, and Socket.IO. Compete with friends or strangers in 2-player rooms, race to type code-themed sentences, and enjoy a beautiful glassmorphism UI with live stats and animated effects.
 
+## Live: https://type-together-production.up.railway.app/
+
 ## Features
 
 - **Real-time Multiplayer:** Join a room and race against another player in real time.
