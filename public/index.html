@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Typing Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="lobby">
+    <input id="username" placeholder="Enter your name" />
+    <button id="joinBtn">Join Game</button>
+  </div>
+  <div id="game" style="display:none;">
+    <div id="waiting">Waiting for player...</div>
+    <h2>Type this paragraph:</h2>
+    <p id="paragraph"></p>
+    <textarea id="input" rows="4" cols="50" disabled placeholder="Start typing here..."></textarea>
+    <button id="startBtn">Start</button>
+    <div id="progress"></div>
+    <div id="winner"></div>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
