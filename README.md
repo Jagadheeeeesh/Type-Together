@@ -16,9 +16,11 @@ A modern, real-time multiplayer typing game for developers, built with Node.js, 
 ## Getting Started
 
 ### Prerequisites
+
 - [Node.js](https://nodejs.org/) (v16 or newer recommended)
 
 ### Installation
+
 1. Clone the repository:
    ```sh
    git clone <your-repo-url>
@@ -35,6 +37,7 @@ A modern, real-time multiplayer typing game for developers, built with Node.js, 
 4. Open your browser and go to [http://localhost:3000](http://localhost:3000)
 
 ## How to Play
+
 1. Enter your name and click **Join Game**.
 2. Wait for another player to join your room.
 3. Click **Start** when both players are ready.
@@ -55,6 +58,7 @@ code-together/
 ```
 
 ## Customization
+
 - **Sentences:** Edit the `PARAGRAPHS` array in `server.js` to add or change the typing challenges.
 - **UI/UX:** Tweak `public/style.css` for colors, fonts, and effects.
 
@@ -63,4 +67,3 @@ code-together/
 MIT
 
 ---
-
